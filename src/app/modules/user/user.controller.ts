@@ -64,7 +64,10 @@ const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   try {
+    // Find user by email
     const user = await userServices.findUserByEmail({ email });
+
+    // If user is not found or password does not match
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(400).json({
         success: false,
@@ -73,6 +76,7 @@ const login = async (req: Request, res: Response) => {
       });
     }
 
+    // Generate JWT token
     const token = jwt.sign(
       {
         _id: user._id,
@@ -81,10 +85,11 @@ const login = async (req: Request, res: Response) => {
         role: user.role,
         address: user.address,
       },
-      "secretKey",
+      "secretKey", // Replace with environment variable (e.g., process.env.JWT_SECRET)
       { expiresIn: "1h" }
     );
 
+    // Respond with token and user data
     res.status(200).json({
       success: true,
       statusCode: 200,
@@ -100,11 +105,12 @@ const login = async (req: Request, res: Response) => {
       },
     });
   } catch (error) {
+    // Handle any errors that occur during login
     res.status(500).json({
       success: false,
       statusCode: 500,
       message: "Error logging in",
-      error,
+      error: error,
     });
   }
 };

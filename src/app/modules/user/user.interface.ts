@@ -1,3 +1,4 @@
+import { Date } from "mongoose";
 import { z } from "zod";
 
 export type TUser = {
@@ -7,6 +8,8 @@ export type TUser = {
   phone: string;
   address: string;
   role: "user" | "admin";
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export const userValidationSchema = z.object({
