@@ -1,6 +1,7 @@
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
 import { userRoutes } from "./app/modules/user/user.route";
+import { serviceRoutes } from "./app/modules/service/service.route";
 
 // import { roomRouter } from "./app/modules/room/room.route";
 // import { slotRouter } from "./app/modules/slot/slot.route";
@@ -17,8 +18,8 @@ app.use(cors());
 // routes
 
 app.use("/api/auth", userRoutes);
-// app.use("/api/rooms", roomRouter);
-// app.use("/api/slots", slotRouter);
+app.use("/api/services", serviceRoutes);
+// app.use("/api/services");
 // app.use("/api/bookings", bookingRouter);
 // app.use("/api/my-bookings", bookingUserRouter);
 
