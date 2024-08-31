@@ -150,9 +150,39 @@ const updateService = async (req: Request, res: Response) => {
   }
 };
 
+const deleteService = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const service = await serviceService.deleteServiceById(id);
+    if (!service) {
+      return res.status(404).json({
+        success: false,
+        statusCode: 404,
+        message: "service not found",
+        data: [],
+      });
+    }
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: "service deleted successfully",
+      data: service,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      statusCode: 500,
+      message: "Error deleting service ",
+      error: error,
+    });
+  }
+};
+
 export const serviceController = {
   createService,
   getAllServices,
   getServiceById,
   updateService,
+  deleteService,
 };

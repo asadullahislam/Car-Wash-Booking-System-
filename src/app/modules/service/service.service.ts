@@ -27,13 +27,7 @@ const updateServiceById = async (
 };
 
 const deleteServiceById = async (serviceId: string) => {
-  const result = await ServiceModel.findByIdAndUpdate(
-    serviceId,
-    {
-      isDeleted: true,
-    },
-    { new: true }
-  );
+  const result = await ServiceModel.findByIdAndDelete(serviceId);
   return result;
 };
 
