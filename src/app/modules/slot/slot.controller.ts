@@ -1,55 +1,103 @@
-import { error } from "console";
-import { error } from "console";
 import { Request, Response } from "express";
-import { slotValidationSchema } from "./slot.interface";
 import { slotServices } from "./slot.service";
 
-const createSlot = async (req: Request, res: Response) => {
+const createSlots = async (req: Request, res: Response): Promise<void> => {
   try {
-    const validation = slotValidationSchema.safeParse(req.body);
-    if (!validation.success) {
-      return res.status(400).json({
-        success: false,
-        statusCode: 400,
-        message: "Invalid slot data",
-        error: validation.error.errors,
-      });
-    }
     const { service, date, startTime, endTime } = req.body;
-    const start = new Date(`${date}T${startTime}:00Z`);
-    const end = new Date(`${date}T${endTime}:00Z`);
-    const slotDuration = 60;
-
-    let currentTime = start;
-    const slots = [];
-
-    while (currentTime < end) {
-      const nextTime = new Date(currentTime.getTime() + slotDuration * 60000);
-      const newSlot = await slotServices.createSlots({
-        service,
-        date,
-        startTime: currentTime.toISOString().split("T")[1].substring(0, 5),
-        endTime: nextTime.toISOString().split("T")[1].substring(0, 5),
-      });
-      slots.push(newSlot);
-      currentTime = nextTime;
-    }
+    const serviceDuration = 60;
+    const slots = await slotServices.createSlots(
+      service,
+      date,
+      startTime,
+      endTime,
+      serviceDuration
+    );
     res.status(200).json({
       success: true,
       statusCode: 200,
-      message: "Slots added successfully",
+      message: "slots created successfully",
       data: slots,
     });
   } catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       success: false,
-      statusCode: 400,
-      message: "Error adding slots",
-      error,
+      statusCode: 500,
+      message: "Error creating slots",
+      error: error,
+    });
+  }
+};
+
+// const getSlot = async (req: Request, res: Response) => {
+//   try {
+//     const { serviceId, date }: { serviceId?: string; date?: string } =
+//       req.query;
+
+//     const slots = await slotServices.getSlotsByDateAndServiceId({
+//       service: serviceId,
+//       date,
+//     });
+//     if (slots.length === 0) {
+//       res.status(404).json({
+//         success: false,
+//         statusCode: 404,
+//         message: "No Data Found",
+//         data: [],
+//       });
+//     } else {
+//       res.status(200).json({
+//         success: true,
+//         statusCode: 200,
+//         message: "Available slots retrieved successfully",
+//         data: slots,
+//       });
+//     }
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       statusCode: 500,
+//       message: "Error retrieving slots",
+//       error: error,
+//     });
+//   }
+// };
+
+const getSlot = async (req: Request, res: Response) => {
+  try {
+    const { serviceId, date }: { serviceId?: string; date?: string } =
+      req.query;
+
+    const slots = await slotServices.getSlotsByDateAndServiceId({
+      service: serviceId,
+      date,
+    });
+    if (slots.length === 0) {
+      res.status(404).json({
+        success: false,
+        statusCode: 404,
+        message: "No Data Found",
+        data: [],
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: "Available slots retrieved successfully",
+        data: slots,
+      });
+    }
+  } catch (error) {
+    console.error("Error retrieving slots:", error); // Log the error
+    res.status(500).json({
+      success: false,
+      statusCode: 500,
+      message: "Error retrieving slots",
+      error: error.message, // Return error message
     });
   }
 };
 
 export const slotControllers = {
-  createSlot,
+  createSlots,
+  getSlot,
 };
