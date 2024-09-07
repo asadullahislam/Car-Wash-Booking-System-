@@ -1,3 +1,4 @@
+import { Date } from "mongoose";
 import { z } from "zod";
 export type TService = {
   name: string;
@@ -5,6 +6,8 @@ export type TService = {
   price: number;
   duration: number;
   isDeleted: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export const serviceValidationSchema = z.object({

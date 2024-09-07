@@ -1,21 +1,22 @@
 import { Router } from "express";
 import { bookingController } from "./booking.controller";
+import { adminAuth, auth } from "../../../Middlewares/authMidleware";
 
 const router = Router();
 
-// Route to create a booking (accessible by users)
-router.post("/api/bookings", bookingController.createBooking);
+// Authenticated user route to create a booking
+router.post("/bookings", auth, bookingController.createBooking);
 
-// Route to get all bookings (accessible by admins)
-router.get("/api/bookings", bookingController.getAllBookings);
+// Admin route to get all bookings
+router.get("/bookings", auth, adminAuth, bookingController.getAllBookings);
 
-// Route to get the current user's bookings
-router.get("/api/my-bookings", bookingController.getMyBookings);
+// Authenticated user route to get their own bookings
+router.get("/my-bookings", auth, bookingController.getMyBookings);
 
-// Route to update a booking by ID (accessible by admins or the user who made the booking)
-router.patch("/api/bookings/:id", bookingController.updateBooking);
+// Admin or the user who made the booking can update a booking
+router.patch("/:id", auth, bookingController.updateBooking);
 
-// Route to get a booking by ID (accessible by admins or the user who made the booking)
-router.get("/api/bookings/:id", bookingController.getBooking);
+// Admin or the user who made the booking can get a booking by ID
+router.get("/:id", auth, bookingController.getBooking);
 
 export const bookingRoutes = router;

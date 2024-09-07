@@ -31,6 +31,8 @@ const createService = async (req: Request, res: Response) => {
           price: service.price,
           duration: service.duration,
           isDeleted: service.isDeleted,
+          createdAt: service.createdAt,
+          updatedAt: service.updatedAt,
         },
       });
     } else {
@@ -101,6 +103,8 @@ const getServiceById = async (req: Request, res: Response) => {
         price: service.price,
         duration: service.duration,
         isDeleted: service.isDeleted,
+        createdAt: service.createdAt,
+        updatedAt: service.updatedAt,
       },
     });
   } catch (error) {
@@ -138,6 +142,8 @@ const updateService = async (req: Request, res: Response) => {
         price: service.price,
         duration: service.duration,
         isDeleted: service.isDeleted,
+        createdAt: service.createdAt,
+        updatedAt: service.updatedAt,
       },
     });
   } catch (error) {
@@ -167,7 +173,16 @@ const deleteService = async (req: Request, res: Response) => {
       success: true,
       statusCode: 200,
       message: "service deleted successfully",
-      data: service,
+      data: {
+        _id: service._id,
+        name: service.name,
+        description: service.description,
+        price: service.price,
+        duration: service.duration,
+        isDeleted: true,
+        createdAt: service.createdAt,
+        updatedAt: service.updatedAt,
+      },
     });
   } catch (error) {
     res.status(500).json({

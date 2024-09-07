@@ -47,25 +47,6 @@ const convertMinutesToTime = (minutes: number): string => {
   return `${hours}:${mins}`;
 };
 
-// const getSlotsByDateAndServiceId = async ({
-//   service,
-//   date,
-// }: {
-//   service?: string;
-//   date?: string;
-// }) => {
-//   const query: { service?: string; data?: string } = {};
-//   if (service) {
-//     query.service = service;
-//   }
-//   if (date) {
-//     query.data = date;
-//   }
-
-//   const result = await SlotModel.find(query).populate("service");
-//   return result;
-// };
-
 const getSlotsByDateAndServiceId = async ({
   service,
   date,

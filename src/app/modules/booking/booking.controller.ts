@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { bookingService } from "./booking.service";
 import { TBooking } from "./booking.interface";
 
+// Controller function to create a booking
 const createBooking = async (req: Request, res: Response) => {
   try {
     const userId = req.user?._id; // Assuming you have user information from JWT in req.user
@@ -34,30 +35,23 @@ const createBooking = async (req: Request, res: Response) => {
       registrationPlate,
     });
 
-    if (booking) {
-      return res.status(200).json({
-        success: true,
-        statusCode: 200,
-        message: "Booking successful",
-        data: booking,
-      });
-    } else {
-      return res.status(400).json({
-        success: false,
-        statusCode: 400,
-        message: "Failed to create booking",
-      });
-    }
+    return res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: "Booking successful",
+      data: booking,
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
       success: false,
       statusCode: 500,
-      message: "Internal Server Error",
+      message: error.message || "Internal Server Error",
     });
   }
 };
 
+// Controller function to get all bookings
 const getAllBookings = async (req: Request, res: Response) => {
   try {
     const bookings = await bookingService.getAllBookings();
@@ -72,11 +66,12 @@ const getAllBookings = async (req: Request, res: Response) => {
     return res.status(500).json({
       success: false,
       statusCode: 500,
-      message: "Internal Server Error",
+      message: error.message || "Internal Server Error",
     });
   }
 };
 
+// Controller function to get bookings for a specific user
 const getMyBookings = async (req: Request, res: Response) => {
   try {
     const userId = req.user?._id; // Assuming you have user information from JWT in req.user
@@ -101,11 +96,12 @@ const getMyBookings = async (req: Request, res: Response) => {
     return res.status(500).json({
       success: false,
       statusCode: 500,
-      message: "Internal Server Error",
+      message: error.message || "Internal Server Error",
     });
   }
 };
 
+// Controller function to update a booking by ID
 const updateBooking = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -135,11 +131,12 @@ const updateBooking = async (req: Request, res: Response) => {
     return res.status(500).json({
       success: false,
       statusCode: 500,
-      message: "Internal Server Error",
+      message: error.message || "Internal Server Error",
     });
   }
 };
 
+// Controller function to get a booking by ID
 const getBooking = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -164,7 +161,7 @@ const getBooking = async (req: Request, res: Response) => {
     return res.status(500).json({
       success: false,
       statusCode: 500,
-      message: "Internal Server Error",
+      message: error.message || "Internal Server Error",
     });
   }
 };

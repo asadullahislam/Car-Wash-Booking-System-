@@ -1,13 +1,20 @@
 import { Router } from "express";
 import { serviceController } from "./service.controller";
+import { adminAuth, auth } from "../../../Middlewares/authMidleware";
+import { slotControllers } from "../slot/slot.controller";
 // import { adminAuth, auth } from "../../../Middlewares/auth";
 
 const router = Router();
 
-router.post("/", serviceController.createService);
 router.get("/", serviceController.getAllServices);
+
 router.get("/:id", serviceController.getServiceById);
-router.put("/:id", serviceController.updateService);
-router.delete("/:id", serviceController.deleteService);
+
+router.post("/", auth, adminAuth, serviceController.createService);
+
+router.put("/:id", auth, adminAuth, serviceController.updateService);
+router.post("/slots", auth, adminAuth, slotControllers.createSlots);
+
+router.delete("/:id", auth, adminAuth, serviceController.deleteService);
 
 export const serviceRoutes = router;
