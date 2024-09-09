@@ -76,16 +76,22 @@ GET /api/auth/profile - Get user profile (requires authentication).
 
 ==>
 POST /api/services - Create a new car wash service (admin only).
+
 GET /api/services - Get all available services.
+
 GET /api/services/:serviceId - Get a service by ID.
+
 PUT /api/services/:serviceId - Update a service by ID (admin only).
+
 DELETE /api/services/:serviceId - Delete a service by ID (admin only)
 
 ## Slot Routes
 
 ==>
 POST /api/services/:serviceId/slots - Create slots for a service (admin only).
+
 GET /api/slots - Get all available slots for booking.
+
 PUT /api/slots/:slotId - Update slot information (admin only)
 
 ## Booking Routes
