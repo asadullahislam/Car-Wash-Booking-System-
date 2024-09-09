@@ -117,11 +117,15 @@ DELETE /api/bookings/:bookingId - Cancel or delete a booking.
 
 Configuration is managed via environment variables. Below are the commonly used variables:
 
+####
+
 PORT - The port number on which the server runs.
-MONGODB_URI - The connection string for the MongoDB database.
+
+DB_URL - The connection string for the MongoDB database.
+
 JWT_SECRET - Secret key used for JSON Web Token (JWT) authentication.
 
-Contributions are welcome! Please follow these steps to contribute:
+## Contributions are welcome! Please follow these steps to contribute:
 
 1. Fork the repository.
 2. Create a new branch for your feature or bugfix.
