@@ -68,13 +68,17 @@ MongoDB (>= 4.x)
 ## User Routes
 
 ==>
+
 POST /api/auth/register - Register a new user.
+
 POST /api/auth/login - Log in a user.
+
 GET /api/auth/profile - Get user profile (requires authentication).
 
 ## Service Routes
 
 ==>
+
 POST /api/services - Create a new car wash service (admin only).
 
 GET /api/services - Get all available services.
@@ -88,6 +92,7 @@ DELETE /api/services/:serviceId - Delete a service by ID (admin only)
 ## Slot Routes
 
 ==>
+
 POST /api/services/:serviceId/slots - Create slots for a service (admin only).
 
 GET /api/slots - Get all available slots for booking.
@@ -97,10 +102,15 @@ PUT /api/slots/:slotId - Update slot information (admin only)
 ## Booking Routes
 
 ==>
+
 POST /api/bookings - Create a new booking.
+
 GET /api/bookings - Get all bookings (admin only).
+
 GET /api/bookings/:bookingId - Get a booking by ID.
+
 PUT /api/bookings/:bookingId - Update a booking.
+
 DELETE /api/bookings/:bookingId - Cancel or delete a booking.
 
 ## Configuration
