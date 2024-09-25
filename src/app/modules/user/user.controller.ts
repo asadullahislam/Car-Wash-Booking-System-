@@ -86,6 +86,8 @@ const login = async (req: Request, res: Response) => {
         email: user.email,
         role: user.role,
         address: user.address,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
       },
       // "b05d112ccd2d3637f758c3618a45a98244ebb8844c1c8b7c1b4c34b864c7174562feae55fe944fa0aee0ae7ac13249d467b149482641f9c76f011c40de69986a",
       process.env.JWT_SECRET as string,
@@ -105,6 +107,8 @@ const login = async (req: Request, res: Response) => {
         phone: user.phone,
         role: user.role,
         address: user.address,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
       },
     });
   } catch (error) {
