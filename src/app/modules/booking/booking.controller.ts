@@ -171,5 +171,4 @@ export const bookingController = {
   getAllBookings,
   getMyBookings,
   updateBooking,
-  getBooking,
 };
